@@ -11,7 +11,7 @@ Anyway, I went on and [enabled](https://github.com/krisachai/RB760IGS-SAMPLE-CON
 
 The result was amazing the throughput went up to 880 Mbits/sec which is more than enough for a small office. I'm getting 100MB/s+ copying from freenas to windows 10 via smb. 
 
-The CPU utilization was 80% on one core and 50% on another which was a good result as I will need some left for Wireguard and CAPsMAN.
+The CPU utilization was 86% on one core and 70% on another which was a good result as I will need some left for Wireguard and CAPsMAN.
 
 
 # Performance Test (1500 MTU)
