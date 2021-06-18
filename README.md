@@ -1,13 +1,15 @@
 # RB760IGS-SAMPLE-CONFIG
 Handling 1Gbps routing performance on RB760IGS Hex S
 
-At first, I was getting < 400 Mbits/sec on Hex S with inter-VLAN routing using Hex S as router on a stick. Then, I searched through the internet and found out that I only need to enable `fasttrack`. 
+At first, I was getting < 400 Mbits/sec on Hex S with inter-VLAN routing using Hex S as router on a stick. The CPU was running at 100% on one core. Then, I searched through the internet and found out that I only need to enable `fasttrack`. 
 
 However, this was confusing a bit as the [wiki](https://wiki.mikrotik.com/wiki/Manual:IP/Fasttrack) says that you need to have `fastpath` enabled on the setting and getting `fastpath` enabled means there is no firewall enabled on the router but I already did have the masquerade NAT.
 
 
 
-Anyway, I went on and enabled the `fasttrack` and it seems to work without fastpath ? (I have no idea). The result was amazing the throughput went up to 880 Mbits/sec which is more than enough for a small office. I'm getting 100MB/s+ copying from freenas to windows 10 via smb.
+Anyway, I went on and enabled the `fasttrack` and it seems to work without fastpath ? (I have no idea). The result was amazing the throughput went up to 880 Mbits/sec which is more than enough for a small office. I'm getting 100MB/s+ copying from freenas to windows 10 via smb. 
+
+The CPU utilization was 80% on one core and 50% on another which was a good result as I will need some left for Wireguard and CAPsMAN.
 
 
 # Performance Test (1500 MTU)
