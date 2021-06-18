@@ -49,7 +49,7 @@ add address=10.1.50.1/24 interface=vlan50 network=10.1.50.0
 add address=10.1.100.1/24 interface=vlan100 network=10.1.100.0
 add address=10.1.200.1/24 interface=vlan200 network=10.1.200.0
 add address=10.1.99.1/24 interface=vlan99 network=10.1.99.0
-add address=10.10.2.2/24 interface=wg0 network=10.10.2.0
+
 /ip dhcp-client
 add disabled=no interface=ether1
 
