@@ -1,0 +1,78 @@
+# jun/18/2021 14:57:03 by RouterOS 7.1beta6
+#
+# model = RB760iGS
+# ether1 = WAN
+# ether2 = VLAN Trunk
+
+/interface vlan
+add interface=ether2 name=vlan10 vlan-id=10
+add interface=ether2 name=vlan11 vlan-id=11
+add interface=ether2 name=vlan50 vlan-id=50
+add interface=ether2 name=vlan99 vlan-id=99
+add interface=ether2 name=vlan100 vlan-id=100
+add interface=ether2 name=vlan200 vlan-id=200
+/interface list
+add name=WAN
+add name=LAN
+
+/ip pool
+add name=dhcp ranges=192.168.88.100-192.168.88.200
+add name=pool-vlan11 ranges=10.1.11.10-10.1.11.200
+add name=pool-vlan10 ranges=10.1.10.10-10.1.10.200
+add name=pool-vlan200 ranges=10.1.200.10-10.1.200.200
+add name=pool-vlan50 ranges=10.1.50.10-10.1.50.200
+add name=pool-vlan100 ranges=10.1.100.10-10.1.100.200
+add name=dhcp_pool6 ranges=10.1.10.10-10.1.10.200
+add name=dhcp_pool7 ranges=10.1.11.2-10.1.11.254
+add name=dhcp_pool8 ranges=10.1.50.2-10.1.50.254
+add name=dhcp_pool9 ranges=10.1.100.2-10.1.100.254
+add name=dhcp_pool10 ranges=10.1.200.2-10.1.200.254
+
+/ip dhcp-server
+add address-pool=dhcp disabled=no interface=ether2 name=dhcp1
+add address-pool=dhcp_pool6 disabled=no interface=vlan10 lease-time=1h name=\
+    dhcp-vlan10
+add address-pool=dhcp_pool7 disabled=no interface=vlan11 name=dhcp-vlan11
+add address-pool=dhcp_pool8 disabled=no interface=vlan50 name=dhcp-vlan50
+add address-pool=dhcp_pool9 disabled=no interface=vlan100 name=dhcp-vlan100
+add address-pool=dhcp_pool10 disabled=no interface=vlan200 name=dhcp-vlan200
+
+/interface list member
+add interface=ether1 list=WAN
+add list=LAN
+
+/ip address
+add address=192.168.88.1/24 interface=ether2 network=192.168.88.0
+add address=10.1.10.1/24 interface=vlan10 network=10.1.10.0
+add address=10.1.11.1/24 interface=vlan11 network=10.1.11.0
+add address=10.1.50.1/24 interface=vlan50 network=10.1.50.0
+add address=10.1.100.1/24 interface=vlan100 network=10.1.100.0
+add address=10.1.200.1/24 interface=vlan200 network=10.1.200.0
+add address=10.1.99.1/24 interface=vlan99 network=10.1.99.0
+add address=10.10.2.2/24 interface=wg0 network=10.10.2.0
+/ip dhcp-client
+add disabled=no interface=ether1
+
+/ip dhcp-server network
+add address=10.1.10.0/24 dns-server=10.1.100.101 gateway=10.1.10.1
+add address=10.1.11.0/24 dns-server=10.1.11.1 gateway=10.1.11.1
+add address=10.1.50.0/24 dns-server=10.1.50.1 gateway=10.1.50.1
+add address=10.1.100.0/24 dns-server=10.1.100.1 gateway=10.1.100.1
+add address=10.1.200.0/24 dns-server=10.1.200.1 gateway=10.1.200.1
+add address=192.168.88.0/24 dns-server=192.168.88.1 gateway=192.168.88.1 \
+    netmask=24
+/ip dns
+set allow-remote-requests=yes
+/ip firewall filter
+add action=fasttrack-connection chain=forward connection-state=\
+    established,related hw-offload=yes
+add action=accept chain=forward connection-state=established,related
+/ip firewall nat
+add action=masquerade chain=srcnat out-interface-list=WAN
+
+/system clock
+set time-zone-name=Asia/Bangkok
+/system ntp client
+set enabled=yes
+/system ntp client servers
+add address=th.pool.ntp.org
