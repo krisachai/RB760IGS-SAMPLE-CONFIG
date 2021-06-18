@@ -3,7 +3,7 @@ Handling 1Gbps routing performance on RB760IGS Hex S
 
 At first, as a mikrotik first-timer, I was getting < 400 Mbits/sec on Hex S with inter-VLAN routing using Hex S as router on a stick. The CPU was running at 100% on one core. Then, I searched through the internet and found out that I only need to enable `fasttrack`. 
 
-However, this was confusing a bit as the [wiki](https://wiki.mikrotik.com/wiki/Manual:IP/Fasttrack) says that you need to have `fastpath` enabled on the setting and getting `fastpath` enabled means there is no firewall enabled on the router but I already did have the masquerade NAT.
+However, this was confusing a bit as the [wiki](https://wiki.mikrotik.com/wiki/Manual:IP/Fasttrack) says that you need to have `fastpath` enabled on the setting. And getting `fastpath` enabled means there must be no firewall rules enabled on the router but I already did have the masquerade NAT.
 
 ![fasttrack](fasttrack_active.PNG)
 
