@@ -15,6 +15,9 @@ The CPU utilization was 86% on one core and 70% on another which was a good resu
 
 
 # Performance Test (1500 MTU)
+
+## Between two VLANs
+
 ```
 iperf -c 10.1.10.11 -P 4
 ------------------------------------------------------------
@@ -31,4 +34,30 @@ TCP window size:  221 KByte (default)
 [  4]  0.0-10.0 sec   336 MBytes   280 Mbits/sec
 [  6]  0.0-10.1 sec   182 MBytes   151 Mbits/sec
 [SUM]  0.0-10.1 sec  1.03 GBytes   883 Mbits/sec
+```
+
+## Wireguard
+
+** To destination host without Wireguard **
+```
+iperf -c xxx
+------------------------------------------------------------
+Client connecting to xxx, TCP port 5001
+TCP window size: 85.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.1.100.5 port 50552 connected with xxx port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec   341 MBytes   285 Mbits/sec
+```
+
+** To destination host with Wireguard **
+
+```
+------------------------------------------------------------
+Client connecting to 10.10.2.1, TCP port 5001
+TCP window size: 45.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.1.100.5 port 33710 connected with 10.10.2.1 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.1 sec  94.1 MBytes  78.0 Mbits/sec
 ```
